@@ -22,8 +22,8 @@ def start_recording():
     except KeyboardInterrupt:
         print ('Recording Stopped!')
         recorder.stop()
-        filename = time.ctime().replace(':', '.') + '.wav'
-        with wave.open(filename, 'w') as f:
+        filename = time.ctime().replace(':', '.')
+        with wave.open(f'{filename}.wav', 'w') as f:
             f.setparams((1, 2, 16000, 1024, "NONE", "NONE"))
             f.writeframes(struct.pack("h" * len(audio), *audio))
 
