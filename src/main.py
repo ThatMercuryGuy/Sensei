@@ -26,3 +26,4 @@ output = llm(prompt)
 output_file = open (f'{filename}_NOTES.txt', 'a')
 
 output_file.write(output)
+output_file.close()

@@ -29,4 +29,5 @@ def start_recording():
 
     finally:
         recorder.delete()
+        f.close()
         return filename

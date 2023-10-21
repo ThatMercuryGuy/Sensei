@@ -7,7 +7,9 @@ def transcribe(filename: str):
     # Run on GPU with FP16
     model = WhisperModel(model_size, device="cuda", compute_type="float16")
 
-    segments, info = model.transcribe(filename, beam_size=5)
-    f = open (filename.replace('wav', 'txt'), 'a')
+    segments, info = model.transcribe(f'{filename}.wav', beam_size=5)
+    f = open (f'{filename}.txt', 'a')
     for segment in segments:
         f.write("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text) + '\n')
+
+    f.close()
