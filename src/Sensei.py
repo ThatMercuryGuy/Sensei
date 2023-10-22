@@ -12,4 +12,4 @@ ann = ""
 
 def get_annotation_time(start_time: float):
     seconds = (round((time.time() - start_time)))
-    return str(seconds) + '.00'
+    return str(seconds) + '.00s'
