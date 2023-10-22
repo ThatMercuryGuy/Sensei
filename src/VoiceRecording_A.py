@@ -6,14 +6,8 @@ import threading
 
 
 
-class StopRecordingException(Exception):
-    "Exception Thrown When Recording Has to Stop"
-    pass
 
-def ThrowStopRecordingException():
-    raise StopRecordingException
-
-def start_recording():
+def start_recording(gate: list, filename: str):
     recorder = PvRecorder(frame_length = 1024)
     audio = []
     # Start recording
@@ -22,15 +16,14 @@ def start_recording():
 
 
     try:
-        while recorder.is_recording:
+        while recorder.is_recording and gate[0]:
             frame = recorder.read()
             # process audio frame
             audio.extend(frame)
 
-    except StopRecordingException or KeyboardInterrupt:
         print ('Recording Stopped!')
         recorder.stop()
-        filename = time.ctime().replace(':', '.')
+        
         with wave.open(f'{filename}.wav', 'w') as f:
             f.setparams((1, 2, 16000, 1024, "NONE", "NONE"))
             f.writeframes(struct.pack("h" * len(audio), *audio))
@@ -38,4 +31,3 @@ def start_recording():
     finally:
         recorder.delete()
         f.close()
-        return filename
