@@ -30,9 +30,14 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 def start_button():
+    global annotation_index
+    annotation_index = 0
+
+
     gate[0] = True
     timer = '00:00:00'
     canvas.itemconfig(timer_text, text=timer)
+
     global filename
     filename = time.ctime().replace(':', '.')
     
@@ -48,11 +53,14 @@ def start_button():
     stopwatch.start()
 
 def annotation():
+    global annotation_index
     ann = entry_1.get("1.0", "end-1c")
     
-    ua = open (f'{filename}_ANN.txt', 'a')
-    ua.write(f'[{get_annotation_time(start_time)}] {ann}\n')
+    ua = open (f'static\{filename}_ANN.txt', 'a')
+    ua.write(f'({annotation_index})[{get_annotation_time(start_time)}] {ann}\n')
     ua.close()
+    annotation_index += 1
+    ann_entry.delete('1.0', 'end')
 
 def stop_button():
     gate[0] = False
@@ -63,7 +71,7 @@ def stop_button():
     app = threading.Thread(target = start_application, args = (filename,))
     app.start()
 
-window = Tk()
+window = Tk(className = ' Sensei')
 
 window.geometry("1000x600")
 window.configure(bg = "#A3BCF9")
@@ -168,7 +176,7 @@ entry_bg_1 = canvas.create_image(
     402.0,
     image=entry_image_1
 )
-entry_1 = Text(
+ann_entry = entry_1 = Text(
     bd=0,
     bg="#D9D9D9",
     fg="#000716",

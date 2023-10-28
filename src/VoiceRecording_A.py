@@ -24,7 +24,7 @@ def start_recording(gate: list, filename: str):
         print ('Recording Stopped!')
         recorder.stop()
         
-        with wave.open(f'{filename}.wav', 'w') as f:
+        with wave.open(f'static\{filename}.wav', 'w') as f:
             f.setparams((1, 2, 16000, 1024, "NONE", "NONE"))
             f.writeframes(struct.pack("h" * len(audio), *audio))
 
