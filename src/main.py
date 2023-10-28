@@ -11,12 +11,21 @@ def start_application(filename: str):
     f = open (f'static\{filename}.txt', 'r') 
 
     prompt = f'''
-    I will provide you with the transcript of a recorded lecture.
-    I would like you to go through the transcript and create detailed notes for the lecture.
-    timestamps are provided within square brackets at the start of each line.
     
-    Use numbered points and write every new point on a new line.
+    I will provide you with the transcript of a recorded lecture.
+    I would like you to read the transript and prepare a summary of the lecture.
+    
 
+    Timestamps are provided within square brackets at the start of each line of the transcript.
+    You must include all essential points, and ignore examples unless they are
+    important to convey the message of the lesson.
+
+    Use bullet points and write every new point on a new line.
+    
+    
+
+    Read through the entire transcript and provide a summary from start to finish.
+    Here is the transcript:
 
     {f.read()}
     '''
